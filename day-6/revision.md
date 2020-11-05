@@ -1,0 +1,2 @@
+- Sử dụng Jquery
+- Bootstrap

@@ -1,5 +1,5 @@
-const textArea = document.querySelector(".formQuestion");
-const form = document.getElementById("form");
+const textArea = $(".formQuestion");
+const form = $("#form");
 
 // Bước 1: bắt sư kiện
 form.addEventListener("submit", (event) => {
@@ -8,7 +8,7 @@ form.addEventListener("submit", (event) => {
     // console.log("Form submit");
 
     // Bước 2: lấy ra giá trị areaText
-    const content = textArea.value;
+    const content = textArea.val();
     // console.log(content);
 
     // Bước 3: gửi lên server
@@ -34,14 +34,14 @@ form.addEventListener("submit", (event) => {
 // Bước 4
 
 // Chữa bài day-4: Thay đổi giá trị 200/200
-textArea.addEventListener('input', () => {
+textArea.on('input', () => {
     console.log("Vao day");
 
     // lay gia tri cua textarea
-    const content = textArea.value;
+    const content = textArea.val();
     // so ki tu con lai
     const restCharacterLength = 200 - content.length;
 
-    const restSpan = document.getElementById("rest");
-    restSpan.innerHTML = restCharacterLength;
+    const restSpan = $("#rest");
+    restSpan.html(restCharacterLength);
 });

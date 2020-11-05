@@ -1,3 +1,4 @@
+let idQuestion;
 const getRandomQuestion = () => {
 
     $.ajax({
@@ -6,9 +7,37 @@ const getRandomQuestion = () => {
         success: (res) => {
             // console.log(res);
             const question = res.data;
-            const { content, id, yesCount: yes, noCount: no } = question;
+            const { id, content, yesCount: yes, noCount: no } = question;
             // nhiệm vụ hiển thị của client
+            idQuestion = id;
             document.getElementById('contentQuestion').innerHTML = content.value;
+            // document.getElementById('voteNo').addEventListener('click', (idQuestion) => {
+            //     $.ajax({
+            //         url: `http://localhost:3000/vote-no`,
+            //         method: 'PUT',
+            //         data: {
+            // idQuestion: idQuestion
+            // }
+            //         success: (res) => {
+            //             window.location.href = `http://localhost:3000/question/${idQuestion}`;
+            //         },
+            //         error: (res) => {
+            //             console.log(res);
+            //         }
+            //     });
+            // });
+            // document.getElementById('voteYes').addEventListener('click', (idQuestion) => {
+            //     $.ajax({
+            //         url: `http://localhost:3000/vote-yes`,
+            //         method: 'PUT',
+            //         success: (res) => {
+            //             window.location.href = `http://localhost:3000/question/${idQuestion}`;
+            //         },
+            //         error: (res) => {
+            //             console.log(res);
+            //         }
+            //     });
+            // });
         },
         error: (res) => {
             console.log(res);
@@ -26,3 +55,26 @@ otherQuestionBtn.addEventListener('click', () => {
     // c2: goi lai http get random question // => client rendering: tra ve du lieu 
     getRandomQuestion();
 });
+
+const sendRequestVote = (type) => {
+    $.ajax({
+        url: `http://localhost:3000/vote-question/${idQuestion}/${type}`,
+        method: 'GET',
+        success: (res) => {
+            console.log(res);
+            window.location.href = `http://localhost:3000/question/${idQuestion}`;
+        }
+    });
+}
+
+document.getElementById('voteNo').addEventListener('click', () => {
+    sendRequestVote('no');
+});
+
+document.getElementById('voteYes').addEventListener('click', () => {
+    sendRequestVote('yes');
+});
+
+// document.querySelectorAll('.voteBtn').addEventListener('click', function(){
+//     console.log(this);
+// });

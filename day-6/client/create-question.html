@@ -9,19 +9,15 @@
 </head>
 
 <body>
-    <h2 id="contentQuestion">Content</h2>
-    <div>
-        <button class="voteBtn" id="voteNo" data-type="no">Sai / Không / Trái</button>
-        <button class="voteBtn" id="voteYes" data-type="no">Đúng / Có / Phải</button>
-    </div>
-    <div>
-        <button>Kết quả vote</button>
-        <button id="otherQuestion">Câu hỏi khác</button>
-    </div>
-
+    <h2>Hãy trả lời 1 số câu hỏi</h2>
+    <form action="" id="form">
+        <textarea class="formQuestion" name="textArea"></textarea>
+        <input type="submit" value="Gửi" />
+    </form>
+    <div>Còn <span id="rest">200</span>/200</div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="/home.js"></script>
+    <script src="/create-question.js"></script>
 </body>
 
 </html>
