@@ -5,7 +5,7 @@ const pathName = window.location.pathname;
 const idQuestion = pathName.split('/').pop();
 
 $.ajax({
-    url: `http://localhost:3000/detail-question/${idQuestion}`,
+    url: `http://localhost:3000/detail-question/:${idQuestion}`,
     method: 'GET',
     success: (res) => {
         // console.log(res);

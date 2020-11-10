@@ -17,7 +17,7 @@ form.on("submit", (event) => {
         type: 'POST',
         data: {
             // content: content
-            value: content
+            content
         },
         success: (res) => {
             // console.log("RES: ", res);

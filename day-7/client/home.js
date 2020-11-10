@@ -7,12 +7,14 @@ const getRandomQuestion = () => {
         success: (res) => {
             // console.log(res);
             const question = res.data;
-            console.log("Random Question: ", question);
-            const { id, content, yesCount: yes, noCount: no } = question;
+            // console.log("Random Question: ", question);
+            const { _id: id, content, yesCount: yes, noCount: no } = question;
             // nhiệm vụ hiển thị của client
             idQuestion = id;
+            // console.log("Random question with id: ", idQuestion);
 
-            $('#contentQuestion').html(content.value);
+            // $('#contentQuestion').html(content.value);
+            $('#contentQuestion').html(content);
             // $('#result-bar-yes').css('style', yes);
             // $('#result-bar-no').css('style', no);
         },

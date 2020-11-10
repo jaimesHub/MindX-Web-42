@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const port = 3000;
+const port = 4000;
 
 //  parse application/x-www-form-urlencoded => voi ajax
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -198,5 +198,5 @@ app.get("*", (req, res) => {
 
 app.listen(port, (err) => {
     if (err) throw err;
-    console.log(`App listening at http://localhost:${port}`);
+    console.log(`App listening at http://localhost:3000`);
 });

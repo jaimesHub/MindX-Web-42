@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const port = 3001;
+const port = 3000;
 
 //  parse application/x-www-form-urlencoded => voi ajax
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -62,11 +62,7 @@ app.get("/ask", (req, res) => {
 app.post('/create-question', (req, res) => {
     // console.log("Req: ", req);
     const content = req.body;
-    console.log(req.body); // {value: 'alo'}
-
-    // const content = req.body.value; // luu y value hay content o create-question.js
-    // const { content } = req.body; // es6
-    // console.log(content);
+    // console.log(req.body); // {value: 'alo'} => from data: {value: content} of create-question.js
 
     // input: content
     // output: new question luu trong data.json
@@ -122,46 +118,11 @@ app.get("/detail-question/:id", (req, res) => {
     });
 });
 
-// app.put("/vote-no", (req, res) => {
-//     const { idQuestion } = req.body;
-//     console.log(idQuestion);
-//     fs.readFile("data.json", (err, data) => {
-//         const listQuestion = JSON.parse(data)
-//         for (let minidata of listQuestion) {
-//             if (parseInt(minidata.id) === parseInt(idQuestion)) {
-//                 minidata.noCount++;
-//                 fs.writeFile("data.json", JSON.stringify(listQuestion), (err) => {
-//                     if (err) throw err;
-//                     console.log("Write successfully!");
-//                 });
-//                 // break;
-//             }
-//         }
-//     });
 
-// });
-
-// app.put("/vote-yes", (req, res) => {
-//     const { idQuestion } = req.body;
-//     fs.readFile("data.json", (err, data) => {
-//         const listQuestion = JSON.parse(data)
-//         for (let minidata of listQuestion) {
-//             if (parseInt(minidata.id) === parseInt(idQuestion)) {
-//                 minidata.yesCount++;
-//                 fs.writeFile("data.json", JSON.stringify(listQuestion), (err) => {
-//                     if (err) throw err;
-//                     console.log("Write successfully!");
-//                 });
-//                 // break;
-//             }
-//         }
-//     });
-
-// });
 
 app.get('/vote-question/:idQuestion/:voteType', (req, res) => {
     const { idQuestion, voteType } = req.params;
-    console.log(idQuestion);
+    // console.log(idQuestion);
 
     fs.readFile('data.json', (err, data) => {
         if (err) return res.send({ success: 0 });
