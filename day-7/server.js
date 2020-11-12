@@ -141,7 +141,8 @@ app.get('/question/:id', (req, res) => {
 app.get("/detail-question/:id", async(req, res) => {
 
     const idQuestion = req.params.id;
-    console.log("Id question from server: ", idQuestion);
+    // console.log("Id question from server: ", idQuestion);
+
     // fs.readFile('data.json', (err, data) => {
     //     if (err) return res.send({ success: 0 });
 
@@ -201,19 +202,21 @@ app.get('/vote-question/:idQuestion/:voteType', async(req, res) => {
 
     // const foundQuestion = await QuestionModel.findOne({ _id: idQuestion });
     const foundQuestion = await QuestionModel.findById(idQuestion);
-    console.log("Found question: ", foundQuestion);
+    // console.log("Found question: ", foundQuestion);
 
     if (!foundQuestion) {
         return res.send({ success: 0 });
     }
 
-    if (voteType === 'no') {
-        foundQuestion.noCount++;
-        await foundQuestion.save();
-    } else if (voteType === 'yes') {
-        foundQuestion.yesCount++;
-        await foundQuestion.save();
-    }
+    // if (voteType === 'no') {
+    //     foundQuestion.noCount++;
+    //     await foundQuestion.save();
+    // } else if (voteType === 'yes') {
+    //     foundQuestion.yesCount++;
+    //     await foundQuestion.save();
+    // }
+    foundQuestion[`${voteType}Count`]++;
+    foundQuestion.save();
 
     // console.log("foundQuestion after updated: ", foundQuestion);
 
@@ -223,6 +226,82 @@ app.get('/vote-question/:idQuestion/:voteType', async(req, res) => {
     });
 
 
+});
+
+app.get("/questions", (req, res) => {
+    const pathFile = path.resolve(__dirname + '/client/list-question.html');
+    // console.log(pathFile);
+    res.sendFile(pathFile);
+});
+
+app.get("/list-question", async(req, res) => {
+    const docs = await QuestionModel.find();
+    // console.log(docs);
+    // res.json(docs);
+    res.send({
+        success: 1,
+        data: docs
+    });
+});
+
+/**Delete question */
+app.delete('/delete-question/:idQuestion', async(req, res) => {
+    // console.log(req.params);
+    const idQuestion = req.params.idQuestion;
+
+    // try {
+    //     const question = await QuestionModel.findByIdAndDelete(idQuestion);
+    //     res.send({
+    //         success: 1,
+    //         data: question
+    //     });
+    // } catch (error) {
+    //     res.send({ success: 0 });
+    // }
+
+    try {
+        const foundQuestion = await QuestionModel.findById(idQuestion);
+        if (!foundQuestion) {
+            res.send({ success: 0 });
+        }
+
+        await QuestionModel.deleteOne({ _id: foundQuestion._id });
+
+        res.send({
+            success: 1,
+            data: foundQuestion
+        });
+    } catch (error) {
+        res.send({ success: 0 });
+    }
+
+});
+let idEditedQuestion;
+/**Update question */
+app.get('/edit-question/:idQuestion', async(req, res) => {
+    idEditedQuestion = req.params.idQuestion;
+    const pathFile = path.resolve(__dirname + '/client/edit-question.html');
+    res.sendFile(pathFile);
+});
+
+app.post('/edit-question', async(req, res) => {
+    const content = req.body;
+    console.log("Content: ", content);
+    const foundQuestion = await QuestionModel.findById(idEditedQuestion);
+    if (!foundQuestion) {
+        res.send({ success: 0 });
+    }
+
+    foundQuestion.content = content.editedContent;
+    foundQuestion.yesCount = content.editedYesCount;
+    foundQuestion.noCount = content.editedNoCount;
+    await foundQuestion.save();
+
+    console.log("Found Question: ", foundQuestion);
+    res.send({
+        success: 1,
+        data: foundQuestion
+    });
 });
 
 app.get("*", (req, res) => {
